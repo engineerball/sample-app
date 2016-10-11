@@ -1,6 +1,6 @@
 node {
   def project = 'devops-141708'
-  def appName = 'gceme-staging'
+  def appName = 'gceme'
   def feSvcName = "${appName}-frontend"
   //def imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
   def imageTag = "engineerball/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
