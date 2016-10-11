@@ -2,7 +2,9 @@ node {
   def project = 'devops-141708'
   def appName = 'gceme'
   def feSvcName = "${appName}-frontend"
-  def imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
+  //def imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
+  def imageTag = "engineerball/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
+  def dockerhubCredential = '8958646a-fc02-41c6-a450-2f2107fc3375'
 
   checkout scm
 
@@ -13,7 +15,9 @@ node {
   sh("docker run ${imageTag} go test")
 
   stage 'Push image to registry'
-  sh("gcloud docker push ${imageTag}")
+  docker.withRegistry('https://index.docker.io/v1/',dockerhubCredential){
+    sh("gcloud docker push ${imageTag}")
+  }
 
   stage "Deploy Application"
   switch (env.BRANCH_NAME) {
